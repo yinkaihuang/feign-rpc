@@ -27,6 +27,7 @@ import java.util.UUID;
 public class FeignRPCClient implements Client {
 
     public static final String UNDERLINE_SYMBOL = "_";
+    public static final int REMOTING_RPC_TIMEOUT = 1000 * 60 * 5;
     private static Logger logger = LoggerFactory.getLogger(FeignRPCClient.class);
 
     private RemotingClient remotingClient;
@@ -44,7 +45,7 @@ public class FeignRPCClient implements Client {
         RemotingCommand requestCommand = transformRequestToRemotingCommand(request, url, uuid);
         RemotingCommand remotingCommand = null;
         try {
-            remotingCommand = remotingClient.invokeSync(key, requestCommand, 1000 * 60 * 5);
+            remotingCommand = remotingClient.invokeSync(key, requestCommand, REMOTING_RPC_TIMEOUT);
             return transformRemotingCommandToResponse(remotingCommand);
         } catch (RemotingSendRequestException e) {
             logger.error(e.toString());
