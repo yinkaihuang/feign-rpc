@@ -35,7 +35,7 @@ public class FeignRPCClient implements Client {
     public FeignRPCClient(RemotingClient client) {
         this.remotingClient = client;
     }
-    
+
     @Override
     public Response execute(Request request, Request.Options options) throws IOException {
         String url = request.url();
@@ -92,9 +92,7 @@ public class FeignRPCClient implements Client {
         }
         if (response.getCode() >= 500 && response.getCode() < 600) {
             logger.error("remote invoke error:{}", response.getRemark());
-            Response.Builder builder = Response.builder().status(response.getCode()).body(response.getError().getBytes());
-            builder.headers(response.getHeader());
-            return builder.build();
+            throw new RuntimeException(response.getError());
         }
         Response.Builder builder = Response.builder().status(response.getCode()).body(response.getBody());
         builder.headers(response.getHeader());
