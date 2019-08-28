@@ -1,9 +1,9 @@
-package cn.bucheng.feign.consumer.handle;
+package cn.bucheng.consumer.handle;
 
 
-import cn.bucheng.feign.consumer.constant.BusinessErrorEnum;
-import cn.bucheng.feign.consumer.exception.BusinessException;
-import cn.bucheng.feign.consumer.model.ServerModel;
+import cn.bucheng.consumer.constant.BusinessErrorEnum;
+import cn.bucheng.consumer.exception.BusinessException;
+import cn.bucheng.consumer.model.ServerModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;

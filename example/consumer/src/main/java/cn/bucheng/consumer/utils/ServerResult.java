@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.utils;
+package cn.bucheng.consumer.utils;
 
 import java.io.Serializable;
 

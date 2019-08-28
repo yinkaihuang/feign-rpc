@@ -1,9 +1,9 @@
-package cn.bucheng.feign.consumer.service;
+package cn.bucheng.consumer.service;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-import cn.bucheng.feign.consumer.service.fail.TestFail;
+import cn.bucheng.consumer.service.fail.TestFail;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
-package cn.bucheng.feign.consumer.handle;
+package cn.bucheng.consumer.handle;
 
 
-import cn.bucheng.feign.consumer.annotation.IgnoreAdvice;
-import cn.bucheng.feign.consumer.model.ServerModel;
+import cn.bucheng.consumer.annotation.IgnoreAdvice;
+import cn.bucheng.consumer.model.ServerModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

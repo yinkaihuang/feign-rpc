@@ -1,4 +1,4 @@
-package cn.bucheng.rpc.producer.utils;
+package cn.bucheng.producer.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

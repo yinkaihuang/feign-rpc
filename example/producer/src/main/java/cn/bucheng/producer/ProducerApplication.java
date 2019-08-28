@@ -1,21 +1,21 @@
-package cn.bucheng.feign.consumer;
+package cn.bucheng.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-
+/**
+ * @author buchengyin
+ * @create 2019/8/12 19:26
+ * @describe
+ */
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@SpringBootApplication
-public class ConsumerApplication {
-
+public class ProducerApplication {
 
     public static void main(String[] args) {
-        int number = Runtime.getRuntime().availableProcessors() * 2;
-        System.out.println(number);
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(ProducerApplication.class, args);
     }
-
 }

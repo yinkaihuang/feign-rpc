@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.exception;
+package cn.bucheng.consumer.exception;
 
 import lombok.Getter;
 

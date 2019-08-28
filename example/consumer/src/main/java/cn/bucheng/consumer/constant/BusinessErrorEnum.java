@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.constant;
+package cn.bucheng.consumer.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.config;
+package cn.bucheng.consumer.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;

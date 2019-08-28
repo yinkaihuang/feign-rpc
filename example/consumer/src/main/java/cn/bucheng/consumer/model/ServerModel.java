@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.model;
+package cn.bucheng.consumer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

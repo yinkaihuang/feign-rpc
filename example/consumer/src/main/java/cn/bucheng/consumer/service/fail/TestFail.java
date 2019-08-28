@@ -1,7 +1,7 @@
-package cn.bucheng.feign.consumer.service.fail;
+package cn.bucheng.consumer.service.fail;
 
+import cn.bucheng.consumer.service.ITest;
 import org.springframework.stereotype.Component;
-import cn.bucheng.feign.consumer.service.ITest;
 
 import java.util.Collections;
 import java.util.List;

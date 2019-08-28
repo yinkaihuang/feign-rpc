@@ -101,7 +101,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>cn.bucheng.rpc.producer.ProducerApplication</mainClass>
+                            <mainClass>cn.bucheng.producer.ProducerApplication</mainClass>
                             <classpathPrefix>lib</classpathPrefix>
                             <useUniqueVersions>false</useUniqueVersions>
                         </manifest>

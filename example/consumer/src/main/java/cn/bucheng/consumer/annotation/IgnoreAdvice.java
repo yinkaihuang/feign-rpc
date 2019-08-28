@@ -1,4 +1,4 @@
-package cn.bucheng.feign.consumer.annotation;
+package cn.bucheng.consumer.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
