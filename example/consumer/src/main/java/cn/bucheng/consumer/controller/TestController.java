@@ -4,13 +4,13 @@ package cn.bucheng.consumer.controller;
 import cn.bucheng.consumer.service.ITest;
 import cn.bucheng.consumer.utils.LogUtils;
 import cn.bucheng.consumer.utils.ServerResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import cn.bucheng.feign.consumer.utils.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +21,7 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class TestController {
 
     @RequestMapping("/save")
     public String save() {
-        LogUtils.info(this, "---------->consumer save method invoke ");
+        log.info("consumer save method invoke ");
         return test.testSave();
     }
 
@@ -42,7 +43,7 @@ public class TestController {
     @RequestMapping("/testJson")
     public Object testJson(@RequestBody Map<String, String> param) {
         Object o = test.testJson(param);
-        System.out.println(o);
+        log.info("get object:{}",o);
         return o;
     }
 
@@ -54,7 +55,7 @@ public class TestController {
 
     @RequestMapping("/listAll")
     public List<String> listAll() {
-        LogUtils.info(this, "--------->consumer listAll method invoke");
+        log.info("consumer listAll method invoke");
         return test.listAll();
     }
 
@@ -65,7 +66,7 @@ public class TestController {
             return ServerResult.fail("请选择文件");
         }
         String name = file.getOriginalFilename();
-        LogUtils.info(this, "-------------->filename:" + name + " filesize:" + file.getSize());
+       log.info("filename:{}, filesize:{}" ,file.getName(),file.getSize());
         return ServerResult.success("upload ok");
     }
 }
