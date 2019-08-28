@@ -4,10 +4,10 @@ import cn.bucheng.rpc.feign.FeignRPCClient;
 import cn.bucheng.rpc.proxy.DispatcherServletInherit;
 import cn.bucheng.rpc.remoting.RemotingClient;
 import cn.bucheng.rpc.remoting.RemotingServer;
-import cn.bucheng.rpc.remoting.netty.ClientController;
+import cn.bucheng.rpc.remoting.netty.NettyClientController;
 import cn.bucheng.rpc.remoting.netty.NettyRemotingClient;
 import cn.bucheng.rpc.remoting.netty.NettyRemotingServer;
-import cn.bucheng.rpc.remoting.netty.ServerController;
+import cn.bucheng.rpc.remoting.netty.NettyServerController;
 import cn.bucheng.rpc.util.ApplicationUtils;
 import cn.bucheng.rpc.util.BeanFactoryUtils;
 import com.netflix.loadbalancer.ILoadBalancer;
@@ -60,14 +60,14 @@ public class FeignRPCConfig {
     }
 
     @Bean
-    public ClientController clientController() {
-        return new ClientController();
+    public NettyClientController clientController() {
+        return new NettyClientController();
     }
 
 
     @Bean
-    public ServerController serverController() {
-        return new ServerController();
+    public NettyServerController serverController() {
+        return new NettyServerController();
     }
 
 

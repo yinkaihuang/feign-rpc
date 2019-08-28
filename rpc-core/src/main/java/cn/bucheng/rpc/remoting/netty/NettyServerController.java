@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @version:
  */
 @Order(-Integer.MAX_VALUE)
-public class ServerController implements CommandLineRunner {
+public class NettyServerController implements CommandLineRunner {
     @Autowired
     private NettyRemotingServer server;
     @Value("${server.port}")
