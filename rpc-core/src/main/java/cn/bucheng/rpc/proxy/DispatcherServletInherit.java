@@ -18,6 +18,7 @@ public class DispatcherServletInherit extends DispatcherServlet {
 
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.info("remoting rpc invoke");
         super.service(request, response);
     }
 
