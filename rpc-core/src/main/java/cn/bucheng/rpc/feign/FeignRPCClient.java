@@ -64,6 +64,7 @@ public class FeignRPCClient implements Client {
 
     /**
      * 将Request对象转变为RemotingCommand对象
+     *
      * @param request
      * @param url
      * @param uuid
@@ -83,18 +84,19 @@ public class FeignRPCClient implements Client {
 
     /**
      * 根据uri构建唯一key
+     *
      * @param uri
      * @return
      */
     private String createKey(URI uri) {
-        Integer port = uri.getPort() + FeignRPCConstant.STEP;
-        String key = uri.getHost() + UNDERLINE_SYMBOL + port;
-        return key;
+        int port = uri.getPort() + FeignRPCConstant.STEP;
+        return uri.getHost() + UNDERLINE_SYMBOL + port;
     }
 
 
     /**
      * 构建唯一ID，用于维持当前调用链
+     *
      * @return
      */
     private String uuidKey() {
@@ -103,6 +105,7 @@ public class FeignRPCClient implements Client {
 
     /**
      * 将RemotingCommand转变为Response对象
+     *
      * @param response
      * @return
      */
