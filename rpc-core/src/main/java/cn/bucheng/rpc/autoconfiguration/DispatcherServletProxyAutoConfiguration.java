@@ -44,6 +44,10 @@ public class DispatcherServletProxyAutoConfiguration {
             this.webMvcProperties = webMvcProperties;
         }
 
+        /**
+         * 向spring ioc容器中注入代理后的DispatcherServlet对象
+         * @return
+         */
         @Bean(name = DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
         @Primary
         public DispatcherServlet dispatcherServlet() {
@@ -58,6 +62,11 @@ public class DispatcherServletProxyAutoConfiguration {
         }
     }
 
+    /**
+     * 动态修改DispatcherServletRegistration中的属性的值loadOnStartup为1
+     * 表示DispatcherServlet的刷新为对象创建时而不是延迟到第一次http请求方法进行
+     * @return
+     */
     @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BeanFactoryPostProcessor() {
