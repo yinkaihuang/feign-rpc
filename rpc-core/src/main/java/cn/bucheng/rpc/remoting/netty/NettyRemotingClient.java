@@ -146,7 +146,7 @@ public class NettyRemotingClient extends AbstractNettyRemoting implements Remoti
                     log.info("netty client connect  to {}:{} server success", ip, port);
                     return;
                 }
-                log.warn("connect to {}:{} fail,cause:{}", ip, port, future.cause().toString());
+                log.warn("connect to {}:{} fail,cause:{}", ip, port, future.cause().getMessage());
             }
         });
     }

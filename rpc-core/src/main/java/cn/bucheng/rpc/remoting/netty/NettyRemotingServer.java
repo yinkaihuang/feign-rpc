@@ -143,7 +143,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
                         log.info("netty server bind port:{} success", port);
                         return;
                     }
-                    log.warn("netty server in port:{} fail,cause:{}", port, future.cause());
+                    log.warn("netty server in port:{} fail,cause:{}", port, future.cause().getMessage());
                     serverChannel = null;
                 }
             });
@@ -179,6 +179,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 构建好HttpServletRequest和HttpServletResponse对象，并调用DispatcherServlet上面的service方法
+     *
      * @param ctx
      * @param cmd
      */
@@ -209,6 +210,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将远程的RemotingCommand对象状态为HttpServletRequest对象
+     *
      * @param rq
      * @param request
      */
@@ -230,6 +232,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将RemotingCommand中header成员变量设置到HttpServletRequest的请求头中去
+     *
      * @param rq
      * @param request
      */
@@ -250,12 +253,13 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将http中的GET请求中的参数转变为map对象
+     *
      * @param query
      * @return
      */
     private Map<String, String> transformQueryToMap(String query) {
         String[] paramStr = query.split("&");
-        if (null == paramStr||paramStr.length==0) {
+        if (null == paramStr || paramStr.length == 0) {
             return null;
         }
         Map<String, String> result = new HashMap<>();
@@ -268,6 +272,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将HttpServletResponse对象转变为RemotingCommand对象
+     *
      * @param response
      * @param rp
      */
@@ -279,6 +284,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将异常对象Throwable转变为RemotingCommand对象
+     *
      * @param response
      * @param rp
      * @param errorCode
@@ -292,6 +298,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
     /**
      * 将HttpServletResponse中的请求头添加到RemotingCommand对象中
+     *
      * @param response
      * @param rp
      */
@@ -310,8 +317,14 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
     private class RemotingServerHandler extends SimpleChannelInboundHandler<String> {
 
         @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            log.info("{} connected current server success",ctx.channel().remoteAddress());
+            super.channelActive(ctx);
+        }
+
+        @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-            log.error(cause.toString());
+            log.warn("{} broken connect,cause:{}", ctx.channel().remoteAddress(), cause.toString());
         }
 
         @Override
