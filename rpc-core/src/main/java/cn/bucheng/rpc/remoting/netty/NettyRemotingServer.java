@@ -318,7 +318,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            log.info("{} connected current server success",ctx.channel().remoteAddress());
+            log.info("remoting client connected current server success,remoting address {}",ctx.channel().remoteAddress());
             super.channelActive(ctx);
         }
 

@@ -143,7 +143,7 @@ public class NettyRemotingClient extends AbstractNettyRemoting implements Remoti
             public void operationComplete(ChannelFuture future) throws Exception {
                 if (future.isSuccess()) {
                     channelTables.put(ip + "_" + port, future.channel());
-                    log.info("netty client connect  to remoting server success, remoting address {}:{} ", ip, port);
+                    log.info("connect  to remoting server success, remoting address {}:{} ", ip, port);
                     return;
                 }
                 log.warn("connect to {}:{} fail,cause:{}", ip, port, future.cause().getMessage());
