@@ -3,9 +3,9 @@ package cn.bucheng.rpc.remoting.netty;
 import cn.bucheng.rpc.util.BeanFactoryUtils;
 import cn.bucheng.rpc.util.BaseUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -55,7 +55,7 @@ public class NettyClientController implements CommandLineRunner {
             List<String> keys = new LinkedList<>();
             if (null != services) {
                 for (String service : services) {
-                    if (serviceName.equals(service) || !serverCache.contains(service))
+                    if (serviceName.equals(service) || !serverCacheSet.contains(service))
                         continue;
                     List<ServiceInstance> instances = discoveryClient.getInstances(service);
                     if (null != instances) {
@@ -83,7 +83,7 @@ public class NettyClientController implements CommandLineRunner {
     }
 
 
-    private Set<String> serverCache = new HashSet<>();
+    private Set<String> serverCacheSet = new HashSet<>();
 
     //获取当前服务项目的需要创建连接的数量
     private void initServerList() {
@@ -92,23 +92,18 @@ public class NettyClientController implements CommandLineRunner {
         if (beanNames.length == 0)
             return;
         for (String beanName : beanNames) {
-            BeanDefinition beanDefinition = BeanFactoryUtils.getBeanFactory().getBeanDefinition(beanName);
-            //根据spring ioc容器中获取到的名称（可能是别名或者是类全名）来转变为全名
-            String className = beanDefinition.getBeanClassName();
-            Class clazz;
-            try {
-                clazz = Class.forName(className);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                log.error(e.toString());
+            Object target = BeanFactoryUtils.getBeanFactory().getBean(beanName);
+            Class<?>[] interfaces = AopUtils.getTargetClass(target).getInterfaces();
+            if(interfaces==null||interfaces.length==0)
                 continue;
+            for(Class interfaceTemp:interfaces){
+                FeignClient annotation = (FeignClient) interfaceTemp.getAnnotation(FeignClient.class);
+                if (annotation == null) {
+                    continue;
+                }
+                String value = annotation.value();
+                serverCacheSet.add(value);
             }
-            FeignClient annotation = (FeignClient) clazz.getAnnotation(FeignClient.class);
-            if (annotation == null) {
-                continue;
-            }
-            String value = annotation.value();
-            serverCache.add(value);
         }
     }
 
