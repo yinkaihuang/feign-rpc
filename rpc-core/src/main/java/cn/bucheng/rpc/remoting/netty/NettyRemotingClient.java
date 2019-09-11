@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class NettyRemotingClient extends AbstractNettyRemoting implements RemotingClient {
     private Timer timer = new Timer("clientHouseKeepingService", true);
-    //存放唯一标示和channel关系
+    //存放唯一标示key（服务名称+"_"+端口号）和channel关系
     private ConcurrentHashMap<String, Channel> channelTables = new ConcurrentHashMap<>();
     private Bootstrap bootstrap;
     private NioEventLoopGroup workGroup;

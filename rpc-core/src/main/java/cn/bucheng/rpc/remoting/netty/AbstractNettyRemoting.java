@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public abstract class AbstractNettyRemoting {
 
-    //存放唯一标示和结果
+    //存放唯一标示(UUID)和结果
     protected final ConcurrentHashMap<String, ResponseFuture> responseTable = new ConcurrentHashMap<>();
 
     public void processMessageReceived(ChannelHandlerContext ctx, RemotingCommand cmd) {
