@@ -177,6 +177,11 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
         }
     }
 
+    /**
+     * 构建好HttpServletRequest和HttpServletResponse对象，并调用DispatcherServlet上面的service方法
+     * @param ctx
+     * @param cmd
+     */
     private void handleMessage(ChannelHandlerContext ctx, RemotingCommand cmd) {
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -202,6 +207,11 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
     }
 
 
+    /**
+     * 将远程的RemotingCommand对象状态为HttpServletRequest对象
+     * @param rq
+     * @param request
+     */
     private void transformRemotingCommandToRequest(RemotingCommand rq, MockHttpServletRequest request) {
         recodeHeadersToRequest(rq, request);
         String method = rq.getMethod();
@@ -218,6 +228,11 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
     }
 
 
+    /**
+     * 将RemotingCommand中header成员变量设置到HttpServletRequest的请求头中去
+     * @param rq
+     * @param request
+     */
     private void recodeHeadersToRequest(RemotingCommand rq, MockHttpServletRequest request) {
         Map<String, Collection<String>> headers = rq.getHeader();
         if (null != headers) {
@@ -233,31 +248,53 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
     }
 
 
+    /**
+     * 将http中的GET请求中的参数转变为map对象
+     * @param query
+     * @return
+     */
     private Map<String, String> transformQueryToMap(String query) {
-        String[] temps = query.split("&");
-        if (null == temps) {
+        String[] paramStr = query.split("&");
+        if (null == paramStr||paramStr.length==0) {
             return null;
         }
         Map<String, String> result = new HashMap<>();
-        for (String temp : temps) {
+        for (String temp : paramStr) {
             String[] split = temp.split("=");
             result.put(split[0], split[1]);
         }
         return result;
     }
 
+    /**
+     * 将HttpServletResponse对象转变为RemotingCommand对象
+     * @param response
+     * @param rp
+     */
     private void transformResponseToRemotingCommand(MockHttpServletResponse response, RemotingCommand rp) {
         rp.setBody(response.getContentAsByteArray());
         rp.setCode(response.getStatus());
         addHeaderToRemotingCommand(response, rp);
     }
 
+    /**
+     * 将异常对象Throwable转变为RemotingCommand对象
+     * @param response
+     * @param rp
+     * @param errorCode
+     * @param errorMsg
+     */
     private void transformThrowableToRemotingCommand(MockHttpServletResponse response, RemotingCommand rp, int errorCode, String errorMsg) {
         rp.setCode(errorCode);
         rp.setError(errorMsg);
         addHeaderToRemotingCommand(response, rp);
     }
 
+    /**
+     * 将HttpServletResponse中的请求头添加到RemotingCommand对象中
+     * @param response
+     * @param rp
+     */
     private void addHeaderToRemotingCommand(MockHttpServletResponse response, RemotingCommand rp) {
         Collection<String> headerNames = response.getHeaderNames();
         if (null != headerNames) {
