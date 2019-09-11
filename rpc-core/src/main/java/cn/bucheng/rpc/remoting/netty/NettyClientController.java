@@ -5,6 +5,7 @@ import cn.bucheng.rpc.util.BaseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -86,27 +87,28 @@ public class NettyClientController implements CommandLineRunner {
 
     //获取当前服务项目的需要创建连接的数量
     private void initServerList() {
+        //从spring的ioc容器中获取类上面存在FeignClient的注解
         String[] beanNames = BeanFactoryUtils.getBeanFactory().getBeanNamesForAnnotation(FeignClient.class);
-        if (beanNames != null && beanNames.length > 0) {
-            for (String beanName : beanNames) {
-                if (!beanName.contains(".")) {
-                    continue;
-                }
-                Class clazz;
-                try {
-                    clazz = Class.forName(beanName);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    log.error(e.toString());
-                    continue;
-                }
-                FeignClient annotation = (FeignClient) clazz.getAnnotation(FeignClient.class);
-                if (annotation == null) {
-                    continue;
-                }
-                String value = annotation.value();
-                serverCache.add(value);
+        if (beanNames.length == 0)
+            return;
+        for (String beanName : beanNames) {
+            BeanDefinition beanDefinition = BeanFactoryUtils.getBeanFactory().getBeanDefinition(beanName);
+            //根据spring ioc容器中获取到的名称（可能是别名或者是类全名）来转变为全名
+            String className = beanDefinition.getBeanClassName();
+            Class clazz;
+            try {
+                clazz = Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                log.error(e.toString());
+                continue;
             }
+            FeignClient annotation = (FeignClient) clazz.getAnnotation(FeignClient.class);
+            if (annotation == null) {
+                continue;
+            }
+            String value = annotation.value();
+            serverCache.add(value);
         }
     }
 
