@@ -83,8 +83,8 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
                 .channel(NioServerSocketChannel.class)
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
-                .childOption(ChannelOption.SO_RCVBUF, 1024 * 100)
-                .childOption(ChannelOption.SO_SNDBUF, 1024 * 100)
+                .childOption(ChannelOption.SO_RCVBUF, 1024 * 100*10)
+                .childOption(ChannelOption.SO_SNDBUF, 1024 * 100*10)
                 .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
